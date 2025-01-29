@@ -1,64 +1,60 @@
-const form = document.getElementById("beerMeetupForm");
-const bestDateContainer = document.getElementById("bestDate");
-
-// Replace this URL with your Google Apps Script deployment URL
-const googleSheetApiUrl = "https://script.google.com/macros/s/AKfycbyHivdCVJGe5_ABuW5WCfh710z2eRnjTGg6srMfSXSYztBueBD-l76bWmx4aEMEwGNH/exec";
-
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const name = document.getElementById("name").value;
-  const datePicker = document.getElementById("datePicker");
-  const dates = datePicker.value ? datePicker.value.split(",") : [];
-
-  if (!name || dates.length === 0) {
-    alert("Please enter your name and at least one date.");
-    return;
-  }
-
-  try {
-    const response = await fetch(googleSheetApiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, dates }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to send data to the server.");
-    }
-
-    const result = await response.json();
-    if (result.status === "success") {
-      alert("Your submission has been saved!");
-      form.reset();
-      loadBestDate(); // Reload the best date
-    } else {
-      alert("Error saving your submission: " + result.error);
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    alert("An error occurred. Please try again.");
-  }
-});
-
+// Fetch best date from Google Sheets and display it
 async function loadBestDate() {
-  try {
-    const response = await fetch(googleSheetApiUrl + "?action=getBestDate");
-    if (!response.ok) {
-      throw new Error("Failed to fetch the best date.");
-    }
+    try {
+        const response = await fetch(
+            "https://script.google.com/macros/s/AKfycbyHivdCVJGe5_ABuW5WCfh710z2eRnjTGg6srMfSXSYztBueBD-l76bWmx4aEMEwGNH/exec?action=getBestDate"
+        );
 
-    const result = await response.json();
-    if (result.status === "success") {
-      bestDateContainer.textContent = `The best date is: ${result.bestDate}`;
-    } else {
-      bestDateContainer.textContent = "Could not determine the best date.";
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        document.getElementById("best-date").textContent =
+            data.bestDate || "No common date yet.";
+    } catch (error) {
+        console.error("Error fetching best date:", error);
     }
-  } catch (error) {
-    console.error("Error fetching best date:", error);
-    bestDateContainer.textContent = "Error loading the best date.";
-  }
 }
 
-// Load the best date on page load
+// Handle form submission to send data to Google Sheets
+document.getElementById("meetup-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const name = formData.get("name");
+    const dates = Array.from(formData.getAll("dates[]")); // Get multiple selected dates
+
+    if (!name || dates.length === 0) {
+        alert("Please enter your name and select at least one date.");
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "https://script.google.com/macros/s/AKfycbyHivdCVJGe5_ABuW5WCfh710z2eRnjTGg6srMfSXSYztBueBD-l76bWmx4aEMEwGNH/exec",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name, dates }),
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        alert(result.message || "Data submitted successfully!");
+
+        // Reload the best date after submission
+        loadBestDate();
+    } catch (error) {
+        console.error("Error submitting data:", error);
+    }
+});
+
+// Initial call to load the best date
 document.addEventListener("DOMContentLoaded", loadBestDate);
