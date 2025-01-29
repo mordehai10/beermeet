@@ -13,7 +13,7 @@ addDateInput();
 
 function submitDates() {
   const selectedDates = Array.from(document.querySelectorAll('#date-inputs input[type="date"]'))
-    .map(input => input.value); 
+    .map(input => input.value);
   const submitterName = submitterNameInput.value;
 
   fetch('https://script.google.com/macros/s/AKfycbyHivdCVJGe5_ABuW5WCfh710z2eRnjTGg6srMfSXSYztBueBD-l76bWmx4aEMEwGNH/exec', {
@@ -21,19 +21,18 @@ function submitDates() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ dates: selectedDates, name: submitterName }),
-    mode: 'no-cors' // Disable CORS checks
+    body: JSON.stringify({ dates: selectedDates, name: submitterName })
   })
-  .then(response => {
-    // Handle the response, even though it's opaque (no access to data)
-    if (response.ok) {
-      alert('Data submitted successfully!'); 
-    } else {
-      alert('Error submitting data.'); 
-    }
-  })
-  .catch(error => {
-    console.error('Error submitting data:', error);
-    alert('Error submitting data. Please try again.');
-  });
+    .then(response => response.json()) // Parse JSON response
+    .then(data => {
+      if (data.success) {
+        alert(data.message); // Show success message from the server
+      } else {
+        alert('Error: ' + data.message); // Show error message from the server
+      }
+    })
+    .catch(error => {
+      console.error('Error submitting data:', error);
+      alert('Error submitting data. Please try again.');
+    });
 }
