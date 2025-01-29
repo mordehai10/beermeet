@@ -2,11 +2,18 @@
 <html>
 <head>
   <title>Date Selection</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Basic styling for the date inputs */
+    input[type="date"] {
+      width: 150px;
+      margin-right: 10px;
+    }
+  </style>
 </head>
 <body>
   <h1>Select Dates</h1>
-  <div id="date-picker"></div>
+  <div id="date-inputs"></div> 
+  <button onclick="addDateInput()">Add Date</button>
   <input type="text" id="submitter-name" placeholder="Enter Your Name">
   <button onclick="submitDates()">Submit</button>
 
