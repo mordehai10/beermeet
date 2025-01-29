@@ -1,32 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beer & Sing Meetups</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Beers & Sing Meetup</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.8.18/datepicker.min.css" 
+          integrity="sha512-eDM7wtQciswlxswiIWsB3qBhgspGUH3jldrK+OouXqJyqBoQaEYzrKNs4Pn2iXQyVXPStMznIlVMxLNGOHqpkA==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.8.18/datepicker.min.js" 
+          integrity="sha512-CJaQl4YC3t6MwVCwFUFPqijYGOenSvbIwYWthmOcklJoCuhMhYzqw==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
-
 <body>
-    <h1>Beer & Sing Meetups</h1>
-
-    <!-- Meetup Form -->
+    <h1>Beers & Sing Meetup</h1>
     <form id="meetup-form">
         <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" required>
-
-        <label for="dates">Select Dates:</label>
-        <input type="date" id="dates" name="dates[]" multiple required>
-
+        <input type="text" id="name" name="name" required><br>
+        <label for="dates">Select Dates (Click to open calendar):</label>
+        <input type="text" id="dates" name="dates" required readonly>
+        <br>
         <button type="submit">Submit</button>
     </form>
-
-    <div id="best-date">
-        <!-- Best date will be shown here -->
-    </div>
-
-    <script src="script.js"></script>
+    <script src="script.js"></script> 
 </body>
-
 </html>
