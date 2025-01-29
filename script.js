@@ -16,7 +16,7 @@ function submitDates() {
     .map(input => input.value); 
   const submitterName = submitterNameInput.value;
 
-  fetch('https://script.google.com/macros/s/1qd_FRhROAKpR3aQphii7LqL4POe7C1WF_3o10lR1DOM/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbyHivdCVJGe5_ABuW5WCfh710z2eRnjTGg6srMfSXSYztBueBD-l76bWmx4aEMEwGNH/exec', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
