@@ -1,28 +1,28 @@
-const datePicker = document.getElementById('date-picker');
-const submitterNameInput = document.getElementById('submitter-name');
+function doGet() {
+  // ... (Your existing doGet() function to handle simple "Hello, World!")
 
-// Create an instance of Flatpickr
-flatpickr(datePicker, {
-  mode: "multiple", 
-});
+}
 
-function submitDates() {
-  const selectedDates = flatpickr.instance(datePicker).getSelectedDates().map(date => date.toISOString()); 
-  const submitterName = submitterNameInput.value;
+function doPost(e) {
+  // Get data from the request
+  const postData = JSON.parse(e.postData.contents); 
+  const dates = postData.dates; 
+  const submitterName = postData.name; 
 
-  fetch('https://script.google.com/macros/s/1qd_FRhROAKpR3aQphii7LqL4POe7C1WF_3o10lR1DOM/exec', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ dates: selectedDates, name: submitterName }) 
-  })
-  .then(response => response.json()) 
-  .then(data => {
-    alert(data.message); // Display success message from the web app
-  })
-  .catch(error => {
-    console.error('Error submitting data:', error);
-    alert('Error submitting data. Please try again.');
-  });
+  // Get the active spreadsheet
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName("beermeet"); 
+
+  // Find the last row with data
+  let lastRow = sheet.getLastRow(); 
+
+  // Append data to the sheet
+  for (const date of dates) {
+    lastRow++;
+    sheet.getRange(lastRow, 1).setValue(date); 
+    sheet.getRange(lastRow, 2).setValue(submitterName); 
+  }
+
+  // Return a success message (optional)
+  return ContentService.createTextOutput("Data submitted successfully!");
 }
