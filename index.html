@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beer and Sing Meetup</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beer & Sing Meetups</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h1>Beer and Sing Meetup</h1>
-  <form id="beerMeetupForm">
-    <label for="name">Your Name:</label>
-    <input type="text" id="name" name="name" required>
-    <br><br>
-    <label for="dates">Select Your Preferred Dates:</label>
-    <input type="date" id="datePicker" multiple>
-    <br><br>
-    <button type="submit">Submit</button>
-  </form>
-  <h2>Best Date:</h2>
-  <div id="bestDate"></div>
-  <script src="script.js"></script>
+    <h1>Beer & Sing Meetups</h1>
+
+    <!-- Meetup Form -->
+    <form id="meetup-form">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="dates">Select Dates:</label>
+        <input type="date" id="dates" name="dates[]" multiple required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="best-date">
+        <!-- Best date will be shown here -->
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
