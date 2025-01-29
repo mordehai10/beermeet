@@ -1,7 +1,15 @@
 const dateInputsContainer = document.getElementById('date-inputs');
 const submitterNameInput = document.getElementById('submitter-name');
 
-// ... (Rest of your date input handling code)
+// Function to add a new date input field
+function addDateInput() {
+  const input = document.createElement('input');
+  input.type = 'date';
+  dateInputsContainer.appendChild(input);
+}
+
+// Initial date input
+addDateInput(); 
 
 function submitDates() {
   const selectedDates = Array.from(document.querySelectorAll('#date-inputs input[type="date"]'))
