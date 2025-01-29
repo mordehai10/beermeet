@@ -1,7 +1,7 @@
 const form = document.getElementById("beerMeetupForm");
 const bestDateContainer = document.getElementById("bestDate");
 
-// Replace this URL with the deployment URL of your Google Apps Script
+// Replace this URL with your Google Apps Script deployment URL
 const googleSheetApiUrl = "https://script.google.com/macros/s/AKfycbyHivdCVJGe5_ABuW5WCfh710z2eRnjTGg6srMfSXSYztBueBD-l76bWmx4aEMEwGNH/exec";
 
 form.addEventListener("submit", async (event) => {
@@ -9,7 +9,7 @@ form.addEventListener("submit", async (event) => {
 
   const name = document.getElementById("name").value;
   const datePicker = document.getElementById("datePicker");
-  const dates = Array.from(datePicker.selectedOptions).map((option) => option.value);
+  const dates = datePicker.value ? datePicker.value.split(",") : [];
 
   if (!name || dates.length === 0) {
     alert("Please enter your name and at least one date.");
