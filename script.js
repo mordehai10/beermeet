@@ -1,28 +1,34 @@
-function doGet() {
-  // ... (Your existing doGet() function to handle simple "Hello, World!")
+const dateInputsContainer = document.getElementById('date-inputs');
+const submitterNameInput = document.getElementById('submitter-name');
 
+// Function to add a new date input field
+function addDateInput() {
+  const input = document.createElement('input');
+  input.type = 'date';
+  dateInputsContainer.appendChild(input);
 }
 
-function doPost(e) {
-  // Get data from the request
-  const postData = JSON.parse(e.postData.contents); 
-  const dates = postData.dates; 
-  const submitterName = postData.name; 
+// Initial date input
+addDateInput(); 
 
-  // Get the active spreadsheet
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = ss.getSheetByName("beermeet"); 
+function submitDates() {
+  const selectedDates = Array.from(document.querySelectorAll('#date-inputs input[type="date"]'))
+    .map(input => input.value); 
+  const submitterName = submitterNameInput.value;
 
-  // Find the last row with data
-  let lastRow = sheet.getLastRow(); 
-
-  // Append data to the sheet
-  for (const date of dates) {
-    lastRow++;
-    sheet.getRange(lastRow, 1).setValue(date); 
-    sheet.getRange(lastRow, 2).setValue(submitterName); 
-  }
-
-  // Return a success message (optional)
-  return ContentService.createTextOutput("Data submitted successfully!");
+  fetch('https://script.google.com/macros/s/1qd_FRhROAKpR3aQphii7LqL4POe7C1WF_3o10lR1DOM/exec', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ dates: selectedDates, name: submitterName }) 
+  })
+  .then(response => response.json()) 
+  .then(data => {
+    alert(data.message); // Display success message from the web app
+  })
+  .catch(error => {
+    console.error('Error submitting data:', error);
+    alert('Error submitting data. Please try again.');
+  });
 }
