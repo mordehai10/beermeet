@@ -1,57 +1,41 @@
+/* Basic styling */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
-  text-align: center;
+  font-family: sans-serif;
   margin: 0;
-  padding: 0;
-}
-
-.container {
-  max-width: 600px;
-  margin: 50px auto;
   padding: 20px;
-  background: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
 }
 
 h1 {
-  font-size: 2em;
-  margin-bottom: 20px;
+  text-align: center;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
-input, button {
-  font-size: 1em;
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"] {
+  width: 100%;
   padding: 10px;
-  width: 80%;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
 
 button {
-  background-color: #007BFF;
+  background-color: #4CAF50;
   color: white;
+  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 3px;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
-#submissionsList {
-  text-align: left;
-  list-style: none;
-  padding: 0;
-}
-
-#submissionsList li {
-  margin: 5px 0;
+/* Datepicker styling (optional) */.ui-datepicker {
+  width: auto!important; 
 }
