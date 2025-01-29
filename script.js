@@ -2,7 +2,7 @@ const form = document.getElementById("beerMeetupForm");
 const bestDateContainer = document.getElementById("bestDate");
 
 // Replace this URL with the deployment URL of your Google Apps Script
-const googleSheetApiUrl = "https://script.google.com/macros/s/AKfycbwZ9XulKeu7oE8qYzt3rrVJHQupXpD6lz2IWiwvPEm0kuzx3mjlc_QFvSA5li7cIQ6o/exec";
+const googleSheetApiUrl = "https://script.google.com/macros/s/AKfycbyHivdCVJGe5_ABuW5WCfh710z2eRnjTGg6srMfSXSYztBueBD-l76bWmx4aEMEwGNH/exec";
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
